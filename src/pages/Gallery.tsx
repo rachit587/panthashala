@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Images } from 'lucide-react';
 import { config } from '../config/restaurantConfig';
@@ -39,14 +39,23 @@ export default function Gallery() {
     return ALL_IMAGES.filter(CATEGORIES[activeCategory].filter);
   }, [activeCategory]);
 
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIndex]);
+
   const openLightbox = (idx: number) => {
     setLightboxIndex(idx);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = () => {
     setLightboxIndex(null);
-    document.body.style.overflow = '';
   };
 
   const goPrev = () => setLightboxIndex(i => i === null ? null : (i - 1 + filtered.length) % filtered.length);

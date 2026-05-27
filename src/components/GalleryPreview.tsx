@@ -37,6 +37,7 @@ export default function GalleryPreview() {
   // Shuffle images on mount and set responsive items per page
   useEffect(() => {
     const shuffled = [...SOURCE_IMAGES].sort(() => 0.5 - Math.random());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setImages(shuffled);
 
     const handleResize = () => {

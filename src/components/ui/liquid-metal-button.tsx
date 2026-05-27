@@ -223,7 +223,7 @@ function injectStyles() {
 function useShaderMount(
   containerRef: React.RefObject<HTMLDivElement | null>,
 ) {
-  // biome-ignore lint/suspicious/noExplicitAny: ShaderMount has no exported type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mountRef = useRef<any>(null);
   const [available, setAvailable] = useState(() => isWebGlAvailable());
 
@@ -304,7 +304,7 @@ function useBtnState(onClickProp?: (e?: React.MouseEvent) => void) {
     if (measureRef.current) {
       setWidth(Math.max(measureRef.current.offsetWidth + 52, 120));
     }
-  });
+  }, []);
 
   const handlers = {
     onMouseEnter: () => {
