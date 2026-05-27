@@ -53,78 +53,118 @@ interface VariantTokens {
   shadowPressed: string;
 }
 
+/* IMPORTANT — Shadow design rule for the chrome ring to be visible:
+ *
+ * The OUTER shadow on the shader-ring layer must NOT use a 1px solid
+ * outline in the brand colour (`0 0 0 1px <brand>`), because that 1px
+ * outline would paint directly on top of the 4px chrome ring and the
+ * eye would read it as a continuous coloured ring — making the metal
+ * disappear entirely.
+ *
+ * Instead we use a faint *neutral-dark* 1px outline on the outermost
+ * edge, plus drop-shadows for depth. The brand colour glow is added
+ * via a larger soft blurred shadow which sits clearly outside the
+ * 4px chrome ring.
+ */
 const V: Record<ButtonVariant, VariantTokens> = {
   primary: {
     innerBg: 'linear-gradient(180deg, #e0bc40 0%, #b8922a 100%)',
     fallbackBg: 'linear-gradient(135deg, #D4AF37 0%, #c9a227 100%)',
     color: '#2a1a04',
-    shadowDefault: '0px 0px 0px 1px rgba(180,140,0,0.4), 0px 9px 9px 0px rgba(180,140,0,0.12), 0px 2px 5px 0px rgba(180,140,0,0.15)',
-    shadowHover: '0px 0px 0px 1px rgba(180,140,0,0.5), 0px 8px 5px 0px rgba(180,140,0,0.15), 0px 4px 4px 0px rgba(180,140,0,0.2)',
-    shadowPressed: '0px 0px 0px 1px rgba(180,140,0,0.6), 0px 1px 2px 0px rgba(180,140,0,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 9px 18px -2px rgba(180,140,0,0.30), 0 3px 8px rgba(0,0,0,0.15)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 12px 24px -2px rgba(180,140,0,0.45), 0 4px 10px rgba(0,0,0,0.20)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.20)',
   },
   orange: {
     innerBg: 'linear-gradient(180deg, #ff7a1a 0%, #cc4400 100%)',
     fallbackBg: 'linear-gradient(135deg, #FF6B00 0%, #e55e00 100%)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(200,80,0,0.4), 0px 9px 9px 0px rgba(200,80,0,0.12), 0px 2px 5px 0px rgba(200,80,0,0.15)',
-    shadowHover: '0px 0px 0px 1px rgba(200,80,0,0.5), 0px 8px 5px 0px rgba(200,80,0,0.15), 0px 4px 4px 0px rgba(200,80,0,0.2)',
-    shadowPressed: '0px 0px 0px 1px rgba(200,80,0,0.6), 0px 1px 2px 0px rgba(200,80,0,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 9px 18px -2px rgba(200,80,0,0.30), 0 3px 8px rgba(0,0,0,0.15)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 12px 24px -2px rgba(200,80,0,0.45), 0 4px 10px rgba(0,0,0,0.20)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.20)',
   },
   outline: {
     innerBg: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 100%)',
     fallbackBg: 'rgba(255,255,255,0.15)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(255,255,255,0.3), 0px 9px 9px 0px rgba(0,0,0,0.12)',
-    shadowHover: '0px 0px 0px 1px rgba(255,255,255,0.55), 0px 8px 5px 0px rgba(0,0,0,0.1)',
-    shadowPressed: '0px 0px 0px 1px rgba(255,255,255,0.6), inset 0 2px 4px rgba(0,0,0,0.2)',
+    shadowDefault:
+      '0 0 0 1px rgba(255,255,255,0.4), 0 9px 18px -2px rgba(0,0,0,0.25)',
+    shadowHover:
+      '0 0 0 1px rgba(255,255,255,0.65), 0 12px 24px -2px rgba(0,0,0,0.35)',
+    shadowPressed:
+      '0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(0,0,0,0.20)',
   },
   call: {
     innerBg: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(160,180,200,0.15) 100%)',
     fallbackBg: 'rgba(255,255,255,0.12)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(255,255,255,0.25), 0px 9px 9px 0px rgba(0,0,0,0.1)',
-    shadowHover: '0px 0px 0px 1px rgba(255,255,255,0.5), 0px 8px 5px 0px rgba(0,0,0,0.08)',
-    shadowPressed: '0px 0px 0px 1px rgba(255,255,255,0.55), inset 0 2px 4px rgba(0,0,0,0.15)',
+    shadowDefault:
+      '0 0 0 1px rgba(255,255,255,0.35), 0 9px 18px -2px rgba(0,0,0,0.22)',
+    shadowHover:
+      '0 0 0 1px rgba(255,255,255,0.6), 0 12px 24px -2px rgba(0,0,0,0.30)',
+    shadowPressed:
+      '0 0 0 1px rgba(255,255,255,0.65), 0 2px 6px rgba(0,0,0,0.18)',
   },
   wood: {
     innerBg: 'linear-gradient(180deg, #7a4f2a 0%, #4a2c10 100%)',
     fallbackBg: 'linear-gradient(135deg, #7a4f2a 0%, #4a2c10 100%)',
     color: '#f5e6c8',
-    shadowDefault: '0px 0px 0px 1px rgba(80,40,0,0.4), 0px 9px 9px 0px rgba(80,40,0,0.12)',
-    shadowHover: '0px 0px 0px 1px rgba(80,40,0,0.5), 0px 8px 5px 0px rgba(80,40,0,0.15)',
-    shadowPressed: '0px 0px 0px 1px rgba(80,40,0,0.6), 0px 1px 2px 0px rgba(80,40,0,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 9px 18px -2px rgba(70,40,10,0.40), 0 3px 8px rgba(0,0,0,0.18)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.40), 0 12px 24px -2px rgba(70,40,10,0.55), 0 4px 10px rgba(0,0,0,0.22)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.22)',
   },
   whatsapp: {
     innerBg: 'linear-gradient(180deg, #32D86F 0%, #1da851 100%)',
     fallbackBg: 'linear-gradient(135deg, #25D366 0%, #1da851 100%)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(37,211,102,0.4), 0px 9px 9px 0px rgba(37,211,102,0.12)',
-    shadowHover: '0px 0px 0px 1px rgba(37,211,102,0.5), 0px 8px 5px 0px rgba(37,211,102,0.15)',
-    shadowPressed: '0px 0px 0px 1px rgba(37,211,102,0.6), 0px 1px 2px 0px rgba(37,211,102,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 9px 18px -2px rgba(37,211,102,0.35), 0 3px 8px rgba(0,0,0,0.15)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 12px 24px -2px rgba(37,211,102,0.50), 0 4px 10px rgba(0,0,0,0.20)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.20)',
   },
   white: {
     innerBg: 'linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%)',
     fallbackBg: '#ffffff',
     color: '#4a2c10',
-    shadowDefault: '0px 0px 0px 1px rgba(0,0,0,0.1), 0px 9px 9px 0px rgba(0,0,0,0.05)',
-    shadowHover: '0px 0px 0px 1px rgba(212,175,55,0.4), 0px 8px 5px 0px rgba(212,175,55,0.1)',
-    shadowPressed: '0px 0px 0px 1px rgba(212,175,55,0.5), 0px 1px 2px 0px rgba(212,175,55,0.2)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.18), 0 9px 18px -2px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.08)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 12px 24px -2px rgba(212,175,55,0.30), 0 4px 10px rgba(0,0,0,0.12)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 2px 6px rgba(0,0,0,0.18)',
   },
   facebook: {
     innerBg: 'linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%)',
     fallbackBg: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(59,130,246,0.4), 0px 9px 9px 0px rgba(59,130,246,0.12)',
-    shadowHover: '0px 0px 0px 1px rgba(59,130,246,0.5), 0px 8px 5px 0px rgba(59,130,246,0.15)',
-    shadowPressed: '0px 0px 0px 1px rgba(59,130,246,0.6), 0px 1px 2px 0px rgba(59,130,246,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 9px 18px -2px rgba(59,130,246,0.35), 0 3px 8px rgba(0,0,0,0.15)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 12px 24px -2px rgba(59,130,246,0.50), 0 4px 10px rgba(0,0,0,0.20)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.20)',
   },
   instagram: {
     innerBg: 'linear-gradient(180deg, #e1306c 0%, #c11252 100%)',
     fallbackBg: 'linear-gradient(135deg, #e1306c 0%, #c11252 100%)',
     color: '#ffffff',
-    shadowDefault: '0px 0px 0px 1px rgba(225,48,108,0.4), 0px 9px 9px 0px rgba(225,48,108,0.12)',
-    shadowHover: '0px 0px 0px 1px rgba(225,48,108,0.5), 0px 8px 5px 0px rgba(225,48,108,0.15)',
-    shadowPressed: '0px 0px 0px 1px rgba(225,48,108,0.6), 0px 1px 2px 0px rgba(225,48,108,0.3)',
+    shadowDefault:
+      '0 0 0 1px rgba(0,0,0,0.25), 0 9px 18px -2px rgba(225,48,108,0.35), 0 3px 8px rgba(0,0,0,0.15)',
+    shadowHover:
+      '0 0 0 1px rgba(0,0,0,0.30), 0 12px 24px -2px rgba(225,48,108,0.50), 0 4px 10px rgba(0,0,0,0.20)',
+    shadowPressed:
+      '0 0 0 1px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.20)',
   },
 };
 
@@ -228,20 +268,24 @@ function useShaderMount(containerRef: React.RefObject<HTMLDivElement | null>) {
           el,
           liquidMetalFragmentShader,
           {
-            u_repetition: 4,
-            u_softness: 0.5,
-            u_shiftRed: 0.3,
-            u_shiftBlue: 0.3,
-            u_distortion: 0,
+            // Tuned for a CLEARLY-VISIBLE chrome ring inside a thin 5-6px
+            // band. Smaller scale + more repetitions + sharper softness
+            // packs more visible bright highlights into the narrow ring
+            // than the default smooth-gradient look.
+            u_repetition: 6,
+            u_softness: 0.2,
+            u_shiftRed: 0.5,
+            u_shiftBlue: 0.5,
+            u_distortion: 0.3,
             u_contour: 0,
             u_angle: 45,
-            u_scale: 8,
+            u_scale: 2,
             u_shape: 1,
             u_offsetX: 0.1,
             u_offsetY: -0.1,
           },
           undefined,
-          0.6,
+          0.8,
         );
         setAvailable(true);
       } catch {
@@ -384,7 +428,11 @@ function Layers({ children, variant, isHovered, isPressed, ripples, shaderContai
           </span>
         </div>
 
-        {/* Layer 2: Pill face (Z=10) */}
+        {/* Layer 2: Pill face (Z=10).
+            The pill is inset 4px on every side so a 4px-wide ring of the
+            liquid-metal shader behind it is clearly visible. The 1px inset
+            dark shadow defines a crisp inner boundary between the chrome
+            ring and the brand-coloured pill. */}
         <div
           style={{
             position: 'absolute', inset: 0,
@@ -396,10 +444,12 @@ function Layers({ children, variant, isHovered, isPressed, ripples, shaderContai
         >
           <div
             style={{
-              width: `${width - 4}px`, height: `${H - 4}px`, margin: '2px',
+              width: `${width - 8}px`, height: `${H - 8}px`, margin: '4px',
               borderRadius: '100px',
               background: webGl ? tok.innerBg : tok.fallbackBg,
-              boxShadow: isPressed ? 'inset 0px 2px 4px rgba(0,0,0,0.4)' : 'none',
+              boxShadow: isPressed
+                ? 'inset 0 2px 4px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.35)'
+                : 'inset 0 0 0 1px rgba(0,0,0,0.35), inset 0 1px 0 0 rgba(255,255,255,0.15)',
               transition: `${SPRING}, width 0.4s ease, box-shadow 0.15s ease`,
             }}
           />
@@ -421,7 +471,12 @@ function Layers({ children, variant, isHovered, isPressed, ripples, shaderContai
               borderRadius: '100px',
               boxShadow: shadow,
               transition: `${SPRING}, width 0.4s ease, box-shadow 0.15s ease`,
-              background: 'transparent',
+              // CSS chrome-gradient backdrop so the metal ring is ALWAYS
+              // visible — even on mobile devices where the WebGL shader
+              // may be throttled or fail to paint. The shader canvas paints
+              // ON TOP of this, adding the animated swirl when available.
+              background:
+                'conic-gradient(from 0deg, #f8f8f8 0deg, #c5c5c5 60deg, #ffffff 120deg, #9a9a9a 180deg, #ededed 240deg, #b0b0b0 300deg, #f8f8f8 360deg)',
             }}
           >
             <div
