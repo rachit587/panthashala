@@ -86,6 +86,8 @@ export default function HeroSlideshow() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5 }}
+            decoding="async"
+            fetchPriority={currentSlide === 0 ? 'high' : 'low'}
           />
         </AnimatePresence>
         <div className="hero-overlay"></div>

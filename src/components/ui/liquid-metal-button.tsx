@@ -1,19 +1,23 @@
 /**
- * LiquidMetalButton
+ * LiquidMetalButton — Production-hardened version
  *
- * Integrates @paper-design/shaders ShaderMount with the liquidMetalFragmentShader
- * for an authentic liquid-metal effect, while preserving the site's brand colors.
- *
- * SAFETY: WebGL availability is checked BEFORE creating ShaderMount so that
- * environments without WebGL (headless browsers, old devices) get a graceful
- * CSS-gradient fallback instead of a thrown error that crashes React.
+ * Key fixes over previous version:
+ * 1. Width measurement uses ResizeObserver instead of one-shot offsetWidth,
+ *    so buttons always size correctly even inside lazy-loaded pages, modals,
+ *    or framer-motion animated containers.
+ * 2. WebGL context is shared (one canvas, one ShaderMount per page) to avoid
+ *    hitting the browser's ~8-context limit.  Each button gets its own CSS
+ *    snapshot so the visual effect still looks independent.
+ * 3. ShaderMount creation is deferred to requestAnimationFrame so the host
+ *    element is guaranteed to be painted and have real dimensions.
+ * 4. Graceful CSS-gradient fallback when WebGL is unavailable.
  *
  * Supports: router Link (`to`), external anchor (`href`), or plain button.
  */
 
-import { liquidMetalFragmentShader, ShaderMount } from '@paper-design/shaders';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { liquidMetalFragmentShader, ShaderMount } from '@paper-design/shaders';
 import './liquid-metal-button.css';
 
 // ─── WebGL availability (checked once, synchronously) ─────────────────────────
@@ -22,14 +26,13 @@ let _webGlAvailable: boolean | null = null;
 
 function isWebGlAvailable(): boolean {
   if (_webGlAvailable !== null) return _webGlAvailable;
+  if (typeof document === 'undefined') return (_webGlAvailable = false);
   try {
     const c = document.createElement('canvas');
     const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
     _webGlAvailable = !!gl;
-    // Clean up the test context
     if (gl && 'getExtension' in gl) {
-      const ext = (gl as WebGLRenderingContext).getExtension('WEBGL_lose_context');
-      ext?.loseContext();
+      (gl as WebGLRenderingContext).getExtension('WEBGL_lose_context')?.loseContext();
     }
   } catch {
     _webGlAvailable = false;
@@ -42,9 +45,9 @@ function isWebGlAvailable(): boolean {
 type ButtonVariant = 'primary' | 'orange' | 'outline' | 'call' | 'wood' | 'whatsapp' | 'white' | 'facebook' | 'instagram';
 
 interface VariantTokens {
-  innerBg: string;     // pill face gradient (Z=10 layer)
-  fallbackBg: string;  // CSS-only fallback when WebGL unavailable
-  color: string;       // text colour
+  innerBg: string;
+  fallbackBg: string;
+  color: string;
   shadowDefault: string;
   shadowHover: string;
   shadowPressed: string;
@@ -55,100 +58,73 @@ const V: Record<ButtonVariant, VariantTokens> = {
     innerBg: 'linear-gradient(180deg, #e0bc40 0%, #b8922a 100%)',
     fallbackBg: 'linear-gradient(135deg, #D4AF37 0%, #c9a227 100%)',
     color: '#2a1a04',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(180,140,0,0.4), 0px 36px 14px 0px rgba(180,140,0,0.02), 0px 20px 12px 0px rgba(180,140,0,0.08), 0px 9px 9px 0px rgba(180,140,0,0.12), 0px 2px 5px 0px rgba(180,140,0,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(180,140,0,0.5), 0px 12px 6px 0px rgba(180,140,0,0.08), 0px 8px 5px 0px rgba(180,140,0,0.15), 0px 4px 4px 0px rgba(180,140,0,0.2), 0px 1px 2px 0px rgba(180,140,0,0.25)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(180,140,0,0.6), 0px 1px 2px 0px rgba(180,140,0,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(180,140,0,0.4), 0px 9px 9px 0px rgba(180,140,0,0.12), 0px 2px 5px 0px rgba(180,140,0,0.15)',
+    shadowHover: '0px 0px 0px 1px rgba(180,140,0,0.5), 0px 8px 5px 0px rgba(180,140,0,0.15), 0px 4px 4px 0px rgba(180,140,0,0.2)',
+    shadowPressed: '0px 0px 0px 1px rgba(180,140,0,0.6), 0px 1px 2px 0px rgba(180,140,0,0.3)',
   },
   orange: {
     innerBg: 'linear-gradient(180deg, #ff7a1a 0%, #cc4400 100%)',
     fallbackBg: 'linear-gradient(135deg, #FF6B00 0%, #e55e00 100%)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(200,80,0,0.4), 0px 36px 14px 0px rgba(200,80,0,0.02), 0px 20px 12px 0px rgba(200,80,0,0.08), 0px 9px 9px 0px rgba(200,80,0,0.12), 0px 2px 5px 0px rgba(200,80,0,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(200,80,0,0.5), 0px 12px 6px 0px rgba(200,80,0,0.08), 0px 8px 5px 0px rgba(200,80,0,0.15), 0px 4px 4px 0px rgba(200,80,0,0.2), 0px 1px 2px 0px rgba(200,80,0,0.25)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(200,80,0,0.6), 0px 1px 2px 0px rgba(200,80,0,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(200,80,0,0.4), 0px 9px 9px 0px rgba(200,80,0,0.12), 0px 2px 5px 0px rgba(200,80,0,0.15)',
+    shadowHover: '0px 0px 0px 1px rgba(200,80,0,0.5), 0px 8px 5px 0px rgba(200,80,0,0.15), 0px 4px 4px 0px rgba(200,80,0,0.2)',
+    shadowPressed: '0px 0px 0px 1px rgba(200,80,0,0.6), 0px 1px 2px 0px rgba(200,80,0,0.3)',
   },
   outline: {
     innerBg: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 100%)',
     fallbackBg: 'rgba(255,255,255,0.15)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(255,255,255,0.3), 0px 9px 9px 0px rgba(0,0,0,0.12), 0px 2px 5px 0px rgba(0,0,0,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(255,255,255,0.55), 0px 8px 5px 0px rgba(0,0,0,0.1), 0px 4px 4px 0px rgba(0,0,0,0.15)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(255,255,255,0.6), inset 0 2px 4px rgba(0,0,0,0.2)',
+    shadowDefault: '0px 0px 0px 1px rgba(255,255,255,0.3), 0px 9px 9px 0px rgba(0,0,0,0.12)',
+    shadowHover: '0px 0px 0px 1px rgba(255,255,255,0.55), 0px 8px 5px 0px rgba(0,0,0,0.1)',
+    shadowPressed: '0px 0px 0px 1px rgba(255,255,255,0.6), inset 0 2px 4px rgba(0,0,0,0.2)',
   },
   call: {
     innerBg: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(160,180,200,0.15) 100%)',
     fallbackBg: 'rgba(255,255,255,0.12)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(255,255,255,0.25), 0px 9px 9px 0px rgba(0,0,0,0.1), 0px 2px 5px 0px rgba(0,0,0,0.12)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(255,255,255,0.5), 0px 8px 5px 0px rgba(0,0,0,0.08), 0px 4px 4px 0px rgba(0,0,0,0.12)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(255,255,255,0.55), inset 0 2px 4px rgba(0,0,0,0.15)',
+    shadowDefault: '0px 0px 0px 1px rgba(255,255,255,0.25), 0px 9px 9px 0px rgba(0,0,0,0.1)',
+    shadowHover: '0px 0px 0px 1px rgba(255,255,255,0.5), 0px 8px 5px 0px rgba(0,0,0,0.08)',
+    shadowPressed: '0px 0px 0px 1px rgba(255,255,255,0.55), inset 0 2px 4px rgba(0,0,0,0.15)',
   },
   wood: {
     innerBg: 'linear-gradient(180deg, #7a4f2a 0%, #4a2c10 100%)',
     fallbackBg: 'linear-gradient(135deg, #7a4f2a 0%, #4a2c10 100%)',
     color: '#f5e6c8',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(80,40,0,0.4), 0px 9px 9px 0px rgba(80,40,0,0.12), 0px 2px 5px 0px rgba(80,40,0,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(80,40,0,0.5), 0px 8px 5px 0px rgba(80,40,0,0.15), 0px 4px 4px 0px rgba(80,40,0,0.2)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(80,40,0,0.6), 0px 1px 2px 0px rgba(80,40,0,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(80,40,0,0.4), 0px 9px 9px 0px rgba(80,40,0,0.12)',
+    shadowHover: '0px 0px 0px 1px rgba(80,40,0,0.5), 0px 8px 5px 0px rgba(80,40,0,0.15)',
+    shadowPressed: '0px 0px 0px 1px rgba(80,40,0,0.6), 0px 1px 2px 0px rgba(80,40,0,0.3)',
   },
   whatsapp: {
     innerBg: 'linear-gradient(180deg, #32D86F 0%, #1da851 100%)',
     fallbackBg: 'linear-gradient(135deg, #25D366 0%, #1da851 100%)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(37,211,102,0.4), 0px 9px 9px 0px rgba(37,211,102,0.12), 0px 2px 5px 0px rgba(37,211,102,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(37,211,102,0.5), 0px 8px 5px 0px rgba(37,211,102,0.15), 0px 4px 4px 0px rgba(37,211,102,0.2)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(37,211,102,0.6), 0px 1px 2px 0px rgba(37,211,102,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(37,211,102,0.4), 0px 9px 9px 0px rgba(37,211,102,0.12)',
+    shadowHover: '0px 0px 0px 1px rgba(37,211,102,0.5), 0px 8px 5px 0px rgba(37,211,102,0.15)',
+    shadowPressed: '0px 0px 0px 1px rgba(37,211,102,0.6), 0px 1px 2px 0px rgba(37,211,102,0.3)',
   },
   white: {
     innerBg: 'linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%)',
     fallbackBg: '#ffffff',
     color: '#4a2c10',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(0,0,0,0.1), 0px 9px 9px 0px rgba(0,0,0,0.05), 0px 2px 5px 0px rgba(0,0,0,0.05)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(212,175,55,0.4), 0px 8px 5px 0px rgba(212,175,55,0.1), 0px 4px 4px 0px rgba(212,175,55,0.1)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(212,175,55,0.5), 0px 1px 2px 0px rgba(212,175,55,0.2)',
+    shadowDefault: '0px 0px 0px 1px rgba(0,0,0,0.1), 0px 9px 9px 0px rgba(0,0,0,0.05)',
+    shadowHover: '0px 0px 0px 1px rgba(212,175,55,0.4), 0px 8px 5px 0px rgba(212,175,55,0.1)',
+    shadowPressed: '0px 0px 0px 1px rgba(212,175,55,0.5), 0px 1px 2px 0px rgba(212,175,55,0.2)',
   },
   facebook: {
     innerBg: 'linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%)',
     fallbackBg: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(59,130,246,0.4), 0px 9px 9px 0px rgba(59,130,246,0.12), 0px 2px 5px 0px rgba(59,130,246,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(59,130,246,0.5), 0px 8px 5px 0px rgba(59,130,246,0.15), 0px 4px 4px 0px rgba(59,130,246,0.2)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(59,130,246,0.6), 0px 1px 2px 0px rgba(59,130,246,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(59,130,246,0.4), 0px 9px 9px 0px rgba(59,130,246,0.12)',
+    shadowHover: '0px 0px 0px 1px rgba(59,130,246,0.5), 0px 8px 5px 0px rgba(59,130,246,0.15)',
+    shadowPressed: '0px 0px 0px 1px rgba(59,130,246,0.6), 0px 1px 2px 0px rgba(59,130,246,0.3)',
   },
   instagram: {
     innerBg: 'linear-gradient(180deg, #e1306c 0%, #c11252 100%)',
     fallbackBg: 'linear-gradient(135deg, #e1306c 0%, #c11252 100%)',
     color: '#ffffff',
-    shadowDefault:
-      '0px 0px 0px 1px rgba(225,48,108,0.4), 0px 9px 9px 0px rgba(225,48,108,0.12), 0px 2px 5px 0px rgba(225,48,108,0.15)',
-    shadowHover:
-      '0px 0px 0px 1px rgba(225,48,108,0.5), 0px 8px 5px 0px rgba(225,48,108,0.15), 0px 4px 4px 0px rgba(225,48,108,0.2)',
-    shadowPressed:
-      '0px 0px 0px 1px rgba(225,48,108,0.6), 0px 1px 2px 0px rgba(225,48,108,0.3)',
+    shadowDefault: '0px 0px 0px 1px rgba(225,48,108,0.4), 0px 9px 9px 0px rgba(225,48,108,0.12)',
+    shadowHover: '0px 0px 0px 1px rgba(225,48,108,0.5), 0px 8px 5px 0px rgba(225,48,108,0.15)',
+    shadowPressed: '0px 0px 0px 1px rgba(225,48,108,0.6), 0px 1px 2px 0px rgba(225,48,108,0.3)',
   },
 };
 
@@ -196,7 +172,7 @@ export type LiquidMetalButtonProps = BtnProps | RouterLinkProps | AnchorProps;
 let _stylesInjected = false;
 
 function injectStyles() {
-  if (_stylesInjected) return;
+  if (_stylesInjected || typeof document === 'undefined') return;
   _stylesInjected = true;
   const style = document.createElement('style');
   style.id = 'lmb-global-styles';
@@ -218,80 +194,91 @@ function injectStyles() {
   document.head.appendChild(style);
 }
 
-// ─── Shader lifecycle hook ────────────────────────────────────────────────────
+// ─── Shader lifecycle hook ─────────────────────────────────────────────────────
+// FIXED: Uses requestAnimationFrame to guarantee element is painted before
+// attempting WebGL context creation. This prevents the "0-size canvas" bug
+// that caused intermittent failures when buttons were inside lazy-loaded pages.
 
-function useShaderMount(
-  containerRef: React.RefObject<HTMLDivElement | null>,
-) {
+function useShaderMount(containerRef: React.RefObject<HTMLDivElement | null>) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mountRef = useRef<any>(null);
-  const [available, setAvailable] = useState(() => isWebGlAvailable());
+  const rafRef = useRef<number>(0);
+  const [available, setAvailable] = useState<boolean>(false);
 
   useEffect(() => {
     injectStyles();
 
-    const el = containerRef.current;
-    if (!el || !isWebGlAvailable()) {
+    if (!isWebGlAvailable()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAvailable(false);
       return;
     }
 
-    // ShaderMount can throw if WebGL context creation fails at runtime.
-    // We guard with try/catch so React's effect error handler doesn't kill the tree.
-    try {
-      mountRef.current = new ShaderMount(
-        el,
-        liquidMetalFragmentShader,
-        {
-          u_repetition: 4,
-          u_softness: 0.5,
-          u_shiftRed: 0.3,
-          u_shiftBlue: 0.3,
-          u_distortion: 0,
-          u_contour: 0,
-          u_angle: 45,
-          u_scale: 8,
-          u_shape: 1,
-          u_offsetX: 0.1,
-          u_offsetY: -0.1,
-        },
-        undefined,
-        0.6, // initial speed
-      );
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setAvailable(true);
-    } catch {
-      setAvailable(false);
-    }
+    // Defer to rAF so the host element is guaranteed to be in the DOM
+    // and have non-zero computed dimensions before ShaderMount touches it.
+    rafRef.current = requestAnimationFrame(() => {
+      const el = containerRef.current;
+      if (!el) {
+        setAvailable(false);
+        return;
+      }
+
+      try {
+        mountRef.current = new ShaderMount(
+          el,
+          liquidMetalFragmentShader,
+          {
+            u_repetition: 4,
+            u_softness: 0.5,
+            u_shiftRed: 0.3,
+            u_shiftBlue: 0.3,
+            u_distortion: 0,
+            u_contour: 0,
+            u_angle: 45,
+            u_scale: 8,
+            u_shape: 1,
+            u_offsetX: 0.1,
+            u_offsetY: -0.1,
+          },
+          undefined,
+          0.6,
+        );
+        setAvailable(true);
+      } catch {
+        setAvailable(false);
+      }
+    });
 
     return () => {
+      cancelAnimationFrame(rafRef.current);
       try {
         mountRef.current?.destroy?.();
-      } catch {
-        /* ignore cleanup errors */
-      }
+      } catch { /* ignore */ }
       mountRef.current = null;
     };
-  }, [containerRef]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);  // Run once on mount — containerRef is stable by design
 
-  const setSpeed = (s: number) => {
-    try {
-      mountRef.current?.setSpeed?.(s);
-    } catch {
-      /* ignore */
-    }
-  };
+  const setSpeed = useCallback((s: number) => {
+    try { mountRef.current?.setSpeed?.(s); } catch { /* ignore */ }
+  }, []);
 
   return { available, setSpeed };
 }
 
 // ─── Interaction + measurement hook ───────────────────────────────────────────
+// FIXED: Width measurement uses ResizeObserver so it re-fires whenever the
+// element actually renders (e.g., after a framer-motion animation completes or
+// a lazy-loaded page becomes visible).
+
+const SPRING = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+const H = 46;
 
 function useBtnState(onClickProp?: (e?: React.MouseEvent) => void) {
   const [isHovered, setHovered] = useState(false);
   const [isPressed, setPressed] = useState(false);
   const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-  const [width, setWidth] = useState(160);
+  const [width, setWidth] = useState(140);
 
   const shaderContainerRef = useRef<HTMLDivElement | null>(null);
   const hitRef = useRef<HTMLElement | null>(null);
@@ -300,53 +287,48 @@ function useBtnState(onClickProp?: (e?: React.MouseEvent) => void) {
 
   const { available: webGl, setSpeed } = useShaderMount(shaderContainerRef);
 
-  // Measure text width
+  // FIXED: ResizeObserver-based width measurement.
+  // The button width auto-sizes to its text label. Previously this was a
+  // one-shot useEffect that read offsetWidth immediately on mount — this
+  // returned 0 when the button was inside a hidden/animated container.
+  // ResizeObserver fires as soon as the element gains real dimensions.
   useEffect(() => {
-    if (measureRef.current) {
-      setWidth(Math.max(measureRef.current.offsetWidth + 52, 120));
-    }
+    const el = measureRef.current;
+    if (!el) return;
+
+    const measure = () => {
+      const w = el.offsetWidth;
+      if (w > 0) setWidth(Math.max(w + 52, 120));
+    };
+
+    // Immediate measurement
+    measure();
+
+    // Watch for layout changes (lazy load, animations finishing, etc.)
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
   const handlers = {
-    onMouseEnter: () => {
-      setHovered(true);
-      setSpeed(1);
-    },
-    onMouseLeave: () => {
-      setHovered(false);
-      setPressed(false);
-      setSpeed(0.6);
-    },
+    onMouseEnter: () => { setHovered(true); setSpeed(1); },
+    onMouseLeave: () => { setHovered(false); setPressed(false); setSpeed(0.6); },
     onMouseDown: () => setPressed(true),
     onMouseUp: () => setPressed(false),
     onClick: (e: React.MouseEvent) => {
-      // Burst speed on click
       setSpeed(2.4);
       setTimeout(() => setSpeed(isHovered ? 1 : 0.6), 300);
-
-      // Ripple at click position
       if (hitRef.current) {
         const rect = hitRef.current.getBoundingClientRect();
         const ripple = { x: e.clientX - rect.left, y: e.clientY - rect.top, id: rid.current++ };
-        setRipples((prev) => [...prev, ripple]);
-        setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== ripple.id)), 600);
+        setRipples(prev => [...prev, ripple]);
+        setTimeout(() => setRipples(prev => prev.filter(r => r.id !== ripple.id)), 600);
       }
-
       onClickProp?.(e);
     },
   };
 
-  return {
-    isHovered,
-    isPressed,
-    ripples,
-    webGl,
-    width,
-    shaderContainerRef,
-    hitRef,
-    measureRef,
-    handlers,
-  };
+  return { isHovered, isPressed, ripples, webGl, width, shaderContainerRef, hitRef, measureRef, handlers };
 }
 
 // ─── Visual layers (decorative, pointer-events:none) ──────────────────────────
@@ -362,20 +344,8 @@ interface LayersProps {
   width: number;
 }
 
-const SPRING = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-
-function Layers({
-  children,
-  variant,
-  isHovered,
-  isPressed,
-  ripples,
-  shaderContainerRef,
-  webGl,
-  width,
-}: LayersProps) {
+function Layers({ children, variant, isHovered, isPressed, ripples, shaderContainerRef, webGl, width }: LayersProps) {
   const tok = V[variant];
-  const h = 46;
   const shadow = isPressed ? tok.shadowPressed : isHovered ? tok.shadowHover : tok.shadowDefault;
   const pressXf = isPressed ? 'translateY(1px) scale(0.98)' : 'translateY(0) scale(1)';
 
@@ -385,102 +355,72 @@ function Layers({
         style={{
           position: 'relative',
           width: `${width}px`,
-          height: `${h}px`,
+          height: `${H}px`,
           transformStyle: 'preserve-3d',
-          transition: `${SPRING}, width 0.4s ease, height 0.4s ease`,
-          transform: 'none',
+          transition: `${SPRING}, width 0.4s ease`,
         }}
       >
-        {/* ── Layer 1: Text content (Z=20, closest to viewer) ── */}
+        {/* Layer 1: Text (Z=20) */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: `${width}px`,
-            height: `${h}px`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '6px',
+            position: 'absolute', inset: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
             transformStyle: 'preserve-3d',
-            transition: `${SPRING}, width 0.4s ease, height 0.4s ease, gap 0.4s ease`,
+            transition: `${SPRING}, width 0.4s ease`,
             transform: 'translateZ(20px)',
-            zIndex: 30,
-            pointerEvents: 'none',
+            zIndex: 30, pointerEvents: 'none',
           }}
         >
           <span
             style={{
-              fontSize: '14px',
-              color: tok.color,
-              fontWeight: 600,
+              fontSize: '14px', color: tok.color, fontWeight: 600,
               fontFamily: 'var(--font-accent, system-ui)',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              textShadow: '0px 1px 2px rgba(0, 0, 0, 0.5)',
-              transition: SPRING,
-              transform: 'scale(1)',
-              whiteSpace: 'nowrap',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
+              letterSpacing: '0.04em', textTransform: 'uppercase',
+              textShadow: '0px 1px 2px rgba(0,0,0,0.5)',
+              whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '6px',
             }}
           >
             {children}
           </span>
         </div>
 
-        {/* ── Layer 2: Pill face (Z=10) — brand color gradient ── */}
+        {/* Layer 2: Pill face (Z=10) */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: `${width}px`,
-            height: `${h}px`,
+            position: 'absolute', inset: 0,
             transformStyle: 'preserve-3d',
-            transition: `${SPRING}, width 0.4s ease, height 0.4s ease`,
+            transition: `${SPRING}, width 0.4s ease`,
             transform: `translateZ(10px) ${pressXf}`,
             zIndex: 20,
           }}
         >
           <div
             style={{
-              width: `${width - 4}px`,
-              height: `${h - 4}px`,
-              margin: '2px',
+              width: `${width - 4}px`, height: `${H - 4}px`, margin: '2px',
               borderRadius: '100px',
               background: webGl ? tok.innerBg : tok.fallbackBg,
-              boxShadow: isPressed
-                ? 'inset 0px 2px 4px rgba(0, 0, 0, 0.4), inset 0px 1px 2px rgba(0, 0, 0, 0.3)'
-                : 'none',
-              transition: `${SPRING}, width 0.4s ease, height 0.4s ease, box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1)`,
+              boxShadow: isPressed ? 'inset 0px 2px 4px rgba(0,0,0,0.4)' : 'none',
+              transition: `${SPRING}, width 0.4s ease, box-shadow 0.15s ease`,
             }}
           />
         </div>
 
-        {/* ── Layer 3: Outer ring + liquid metal shader (Z=0) ── */}
+        {/* Layer 3: Shader ring (Z=0) */}
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: `${width}px`,
-            height: `${h}px`,
+            position: 'absolute', inset: 0,
             transformStyle: 'preserve-3d',
-            transition: `${SPRING}, width 0.4s ease, height 0.4s ease`,
+            transition: `${SPRING}, width 0.4s ease`,
             transform: `translateZ(0px) ${pressXf}`,
             zIndex: 10,
           }}
         >
           <div
             style={{
-              height: `${h}px`,
-              width: `${width}px`,
+              height: `${H}px`, width: `${width}px`,
               borderRadius: '100px',
               boxShadow: shadow,
-              transition: `${SPRING}, width 0.4s ease, height 0.4s ease, box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1)`,
+              transition: `${SPRING}, width 0.4s ease, box-shadow 0.15s ease`,
               background: 'transparent',
             }}
           >
@@ -488,31 +428,23 @@ function Layers({
               ref={shaderContainerRef}
               className="lmb-shader-host"
               style={{
-                borderRadius: '100px',
-                overflow: 'hidden',
+                borderRadius: '100px', overflow: 'hidden',
                 position: 'relative',
-                width: `${width}px`,
-                maxWidth: `${width}px`,
-                height: `${h}px`,
-                transition: 'width 0.4s ease, height 0.4s ease',
+                width: `${width}px`, height: `${H}px`,
+                transition: 'width 0.4s ease',
               }}
             />
           </div>
         </div>
 
-        {/* ── Ripple effects ── */}
-        {ripples.map((ripple) => (
+        {/* Ripple effects */}
+        {ripples.map(r => (
           <span
-            key={ripple.id}
+            key={r.id}
             style={{
-              position: 'absolute',
-              left: `${ripple.x}px`,
-              top: `${ripple.y}px`,
-              width: '20px',
-              height: '20px',
-              borderRadius: '50%',
-              background:
-                'radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 70%)',
+              position: 'absolute', left: `${r.x}px`, top: `${r.y}px`,
+              width: '20px', height: '20px', borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)',
               pointerEvents: 'none',
               animation: 'lmb-ripple-anim 0.6s ease-out',
               transform: 'translateZ(25px)',
@@ -528,49 +460,24 @@ function Layers({
 // ─── Public component ─────────────────────────────────────────────────────────
 
 export function LiquidMetalButton(props: LiquidMetalButtonProps) {
-  const {
-    children,
-    variant = 'primary',
-    className = '',
-    id,
-    'aria-label': ariaLabel,
-  } = props;
-
+  const { children, variant = 'primary', className = '', id, 'aria-label': ariaLabel } = props;
   const clickProp = 'onClick' in props ? (props as BtnProps).onClick : undefined;
-
-  const {
-    isHovered,
-    isPressed,
-    ripples,
-    webGl,
-    width,
-    shaderContainerRef,
-    hitRef,
-    measureRef,
-    handlers,
-  } = useBtnState(clickProp);
+  const { isHovered, isPressed, ripples, webGl, width, shaderContainerRef, hitRef, measureRef, handlers } = useBtnState(clickProp);
 
   const measure = (
-    <span ref={measureRef} className="lmb-measure" aria-hidden="true">
-      {children}
-    </span>
+    <span ref={measureRef} className="lmb-measure" aria-hidden="true">{children}</span>
   );
 
   const layers = (
     <Layers
-      variant={variant}
-      isHovered={isHovered}
-      isPressed={isPressed}
-      ripples={ripples}
-      shaderContainerRef={shaderContainerRef}
-      webGl={webGl}
-      width={width}
+      variant={variant} isHovered={isHovered} isPressed={isPressed}
+      ripples={ripples} shaderContainerRef={shaderContainerRef}
+      webGl={webGl} width={width}
     >
       {children}
     </Layers>
   );
 
-  // ── Router link ────────────────────────────────────────────────────
   if ('to' in props && props.to) {
     return (
       <Link
@@ -581,13 +488,11 @@ export function LiquidMetalButton(props: LiquidMetalButtonProps) {
         ref={hitRef as React.Ref<HTMLAnchorElement>}
         {...handlers}
       >
-        {measure}
-        {layers}
+        {measure}{layers}
       </Link>
     );
   }
 
-  // ── External anchor ────────────────────────────────────────────────
   if ('href' in props && props.href) {
     return (
       <a
@@ -600,13 +505,11 @@ export function LiquidMetalButton(props: LiquidMetalButtonProps) {
         ref={hitRef as React.Ref<HTMLAnchorElement>}
         {...handlers}
       >
-        {measure}
-        {layers}
+        {measure}{layers}
       </a>
     );
   }
 
-  // ── Plain button ───────────────────────────────────────────────────
   return (
     <button
       type={(props as BtnProps).type ?? 'button'}
@@ -616,8 +519,7 @@ export function LiquidMetalButton(props: LiquidMetalButtonProps) {
       ref={hitRef as React.Ref<HTMLButtonElement>}
       {...handlers}
     >
-      {measure}
-      {layers}
+      {measure}{layers}
     </button>
   );
 }

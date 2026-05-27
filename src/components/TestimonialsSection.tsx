@@ -137,7 +137,9 @@ export default function TestimonialsSection() {
                 <img 
                   src={review.avatar} 
                   alt={review.name} 
-                  className="author-avatar" 
+                  className="author-avatar"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="author-info">
                   <h5 className="author-name">{review.name}</h5>
