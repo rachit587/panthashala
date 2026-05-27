@@ -258,6 +258,7 @@ function useShaderMount(
         undefined,
         0.6, // initial speed
       );
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAvailable(true);
     } catch {
       setAvailable(false);
