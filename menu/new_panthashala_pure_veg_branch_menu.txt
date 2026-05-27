@@ -1,0 +1,261 @@
+NEW PANTHASHALA RESTAURANT - SOUTH INDIAN PURE VEG BRANCH MENU
+Branch Type: Pure Vegetarian
+Food Policy: No Onion, No Garlic
+Page Language: English
+Currency: INR (₹)
+Recommended Website Menu Tags: Pure Veg, No Onion No Garlic, South Indian, Snacks, Chaat, Beverages
+
+IMPORTANT WEBSITE NOTE:
+This menu is for the pure vegetarian South Indian branch of Panthashala. Every item listed below should be treated as VEG and prepared without onion and garlic. Use this file directly for the restaurant website menu section.
+
+============================================================
+CATEGORY: DOSA
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: South Indian
+============================================================
+
+1. Sada Dosa
+Price: ₹90
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian
+Best Seller: No
+
+2. Masala Dosa
+Price: ₹100
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Popular
+Best Seller: Yes
+
+3. Butter Masala Dosa
+Price: ₹110
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Butter
+Best Seller: Yes
+
+4. Paper Sada Dosa
+Price: ₹140
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Crispy Dosa
+Best Seller: No
+
+5. Paper Masala Dosa
+Price: ₹160
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Crispy Dosa, Popular
+Best Seller: Yes
+
+6. Butter Paneer Special Dosa
+Price: ₹160
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Paneer, Butter, Special
+Best Seller: Yes
+
+7. Butter Sada Dosa
+Price: ₹100
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Butter
+Best Seller: No
+
+8. Cheese Sada Dosa
+Price: ₹140
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Cheese
+Best Seller: No
+
+9. Cheese Masala Dosa
+Price: ₹150
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Cheese, Popular
+Best Seller: Yes
+
+10. Ghee Sada Dosa
+Price: ₹130
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Ghee
+Best Seller: No
+
+11. Ghee Masala Dosa
+Price: ₹140
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Ghee
+Best Seller: No
+
+============================================================
+CATEGORY: SOUTH INDIAN SNACKS
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: South Indian
+============================================================
+
+1. Idli
+Price: ₹60
+Quantity: 2 pcs
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Light Snack
+Best Seller: Yes
+
+2. Sambar Bara
+Price: ₹80
+Quantity: 2 pcs
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Sambar
+Best Seller: No
+
+3. Dahi Bara
+Price: ₹80
+Quantity: 2 pcs
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Dahi, Snack
+Best Seller: No
+
+4. Masala Uttapam
+Price: ₹130
+Quantity: 1 plate
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, South Indian, Uttapam
+Best Seller: Yes
+
+============================================================
+CATEGORY: CHAAT
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: Indian Snacks
+============================================================
+
+1. Papri Chaat
+Price: ₹70
+Quantity: 1 plate
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Chaat, Snack
+Best Seller: No
+
+2. Mix Chaat
+Price: ₹80
+Quantity: 1 plate
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Chaat, Mixed Snack
+Best Seller: No
+
+============================================================
+CATEGORY: ROLLS
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: Indian Snacks
+============================================================
+
+1. Paneer Special Roll
+Price: ₹100
+Quantity: 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Paneer, Roll, Special
+Best Seller: Yes
+
+============================================================
+CATEGORY: CHOWMEIN
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: Indo-Chinese
+============================================================
+
+1. Veg Chowmein
+Price: ₹100 full / ₹60 half
+Quantity: Full or Half
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Indo-Chinese, Noodles
+Best Seller: Yes
+
+2. Paneer Special Chowmein
+Price: ₹150
+Quantity: 1 plate
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Indo-Chinese, Paneer, Noodles, Special
+Best Seller: Yes
+
+============================================================
+CATEGORY: CHOLE BHATURE
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+Cuisine: North Indian
+============================================================
+
+1. Chole Bhature
+Price: ₹80 for 2 pcs / ₹50 for 1 pc
+Quantity: 2 pcs or 1 pc
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, North Indian, Chole Bhature
+Best Seller: Yes
+
+2. Extra Bhature
+Price: ₹30
+Quantity: Extra serving
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Add-on
+Best Seller: No
+
+3. Extra Chole
+Price: ₹30
+Quantity: Extra serving
+Type: Veg
+Tags: Pure Veg, No Onion No Garlic, Add-on
+Best Seller: No
+
+============================================================
+CATEGORY: BEVERAGES
+Diet Type: Veg
+Food Policy: No Onion, No Garlic
+============================================================
+
+1. Plain Lassi
+Price: ₹50
+Quantity: 1 glass
+Type: Veg Beverage
+Tags: Pure Veg, No Onion No Garlic, Beverage, Lassi
+Best Seller: No
+
+2. Masala Cold Drink
+Price: ₹40
+Quantity: 1 glass
+Type: Veg Beverage
+Tags: Pure Veg, No Onion No Garlic, Beverage, Masala Drink
+Best Seller: No
+
+3. Mineral Water
+Price: ₹20
+Quantity: 1 bottle
+Type: Beverage
+Tags: Pure Veg, No Onion No Garlic, Water
+Best Seller: No
+
+============================================================
+SUGGESTED BEST-SELLING ITEMS FOR WEBSITE HIGHLIGHT
+============================================================
+
+1. Masala Dosa - ₹100
+2. Butter Masala Dosa - ₹110
+3. Paper Masala Dosa - ₹160
+4. Butter Paneer Special Dosa - ₹160
+5. Cheese Masala Dosa - ₹150
+6. Idli - ₹60
+7. Masala Uttapam - ₹130
+8. Paneer Special Roll - ₹100
+9. Veg Chowmein - ₹100 full / ₹60 half
+10. Paneer Special Chowmein - ₹150
+11. Chole Bhature - ₹80 for 2 pcs / ₹50 for 1 pc
+
+============================================================
+COPY-PASTE SUMMARY FORMAT FOR CODING AGENT
+============================================================
+
+Use this menu for the Pure Veg South Indian branch of New Panthashala Restaurant. The entire menu is vegetarian and no onion, no garlic. Show the menu categories as Dosa, South Indian Snacks, Chaat, Rolls, Chowmein, Chole Bhature, and Beverages. Add filters/tags for Pure Veg, No Onion No Garlic, South Indian, Snacks, Indo-Chinese, and Beverages. Highlight the best sellers: Masala Dosa, Butter Masala Dosa, Paper Masala Dosa, Butter Paneer Special Dosa, Cheese Masala Dosa, Idli, Masala Uttapam, Paneer Special Roll, Veg Chowmein, Paneer Special Chowmein, and Chole Bhature.

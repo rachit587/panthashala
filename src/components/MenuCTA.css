@@ -1,0 +1,181 @@
+/* ===== MENU CTA SECTION ===== */
+.menu-cta-section {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, var(--color-wood-dark) 0%, var(--color-wood-medium) 60%, #1a0e06 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(212,175,55,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.menu-cta-section .section-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-gold-light);
+}
+
+.text-ivory { color: var(--color-ivory-dark); }
+
+.menu-scroller-wrapper {
+  overflow: hidden;
+  width: 100%;
+  margin: 2.5rem 0;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  padding: 2rem 0; /* space for scaled items */
+}
+
+.menu-scroller {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scrollInfinite 40s linear infinite;
+}
+
+.menu-scroller:hover,
+.menu-scroller-wrapper.is-paused .menu-scroller {
+  animation-play-state: paused;
+}
+
+@keyframes scrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+.menu-scroll-item {
+  width: 250px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, background 0.4s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.menu-scroll-item:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.menu-scroll-item.is-active {
+  transform: scale(1.2);
+  z-index: 10;
+  background: #ffffff;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.menu-scroll-img-wrapper {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #fff; /* Ensure white background for images */
+}
+
+.menu-scroll-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.menu-scroll-item:hover .menu-scroll-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.menu-scroll-info {
+  text-align: center;
+}
+
+.menu-scroll-name {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-ivory);
+  margin-bottom: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.menu-scroll-item.is-active .menu-scroll-name {
+  color: #1a0e06;
+}
+
+.menu-scroll-price {
+  font-family: var(--font-accent);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-gold);
+}
+
+.menu-scroll-item.is-active .menu-scroll-price {
+  color: var(--color-orange);
+}
+
+.menu-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Shared btn styles — referenced by HeroSlideshow too */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: all var(--transition-normal);
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-gold) 0%, #c9a227 100%);
+  color: var(--color-wood-dark);
+  box-shadow: var(--shadow-gold);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212,175,55,0.45);
+}
+
+.btn-orange {
+  background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-orange-dark) 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255,107,0,0.3);
+}
+.btn-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,107,0,0.5);
+}
+
+@media (min-width: 768px) {
+  .menu-cta-section {
+    padding: 5rem 0;
+  }
+}

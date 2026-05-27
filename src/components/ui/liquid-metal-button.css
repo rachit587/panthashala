@@ -1,0 +1,39 @@
+/* ══════════════════════════════════════════════════════════
+   Liquid Metal Button — minimal layout helpers
+   All animation & styling is handled via inline styles to
+   match the reference component exactly.
+   ══════════════════════════════════════════════════════════ */
+
+/* Outer link / span / button reset */
+.lmb-outer {
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  vertical-align: middle;
+  position: relative;
+}
+
+/* Invisible text measurer — auto-sizes the button to its content */
+.lmb-measure {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-accent, system-ui);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  pointer-events: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Focus-visible ring for accessibility */
+.lmb-outer:focus-visible {
+  outline: 2px solid var(--color-gold, #D4AF37);
+  outline-offset: 4px;
+  border-radius: 100px;
+}

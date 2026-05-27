@@ -1,0 +1,1010 @@
+PANTHASHALA RESTAURANT — WEBSITE MENU DATA
+Location: D.B. Road, Rampurhat, Birbhum
+Phone: 7501481011 / 8641824175
+Currency: INR (₹)
+Menu Language: English
+Diet Type Labels Used:
+- Veg: Vegetarian
+- Egg: Contains egg
+- Non-Veg: Contains chicken, fish, mutton, or prawn
+- Beverage: Drink item
+Notes:
+- Prices are written exactly in INR wherever visible.
+- Mineral Water price corrected to ₹20 as instructed.
+- Cold Drinks (1 Glass) price corrected to ₹25 as instructed.
+- Roti item from the image where the price was missing has been excluded as instructed because roti is already listed in the Tandoor section.
+- “Suggested Best-Seller” means a recommended website highlight based on popular/common restaurant choices, not verified sales data.
+
+============================================================
+CATEGORY: SOFT DRINKS
+Page Section Language: English
+============================================================
+
+1. Mineral Water
+   Price: ₹20
+   Type: Beverage
+   Suggested Best-Seller: No
+
+2. Cold Drinks (1 Glass)
+   Price: ₹25
+   Type: Beverage
+   Suggested Best-Seller: No
+
+3. Masala Cold Drinks
+   Price: ₹40
+   Type: Beverage
+   Suggested Best-Seller: Yes
+
+4. Plain Lassi (1 Glass)
+   Price: ₹50
+   Type: Beverage / Veg
+   Suggested Best-Seller: No
+
+5. Special Lassi (1 Glass)
+   Price: ₹80
+   Type: Beverage / Veg
+   Suggested Best-Seller: Yes
+
+6. CSP Lassi (1 Glass)
+   Price: ₹90
+   Type: Beverage / Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: SOUP
+Page Section Language: English
+============================================================
+
+1. Veg Soup
+   Price: ₹90
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Veg Hot & Sour Soup
+   Price: ₹100
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+3. Chicken Clear Soup
+   Price: ₹110
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+4. Hot & Sour Chicken Soup
+   Price: ₹140
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Veg Manchow Soup
+   Price: ₹120
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+6. Chicken Manchow Soup
+   Price: ₹150
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+7. Chicken Lung Fung Soup
+   Price: ₹160
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+8. Veg Sweet Corn Soup
+   Price: ₹120
+   Type: Veg
+   Suggested Best-Seller: No
+
+9. Chicken Sweet Corn Soup
+   Price: ₹170
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: SNACKS
+Page Section Language: English
+============================================================
+
+1. Egg Pakora (8 pcs.)
+   Price: ₹130
+   Type: Egg
+   Suggested Best-Seller: No
+
+2. Paneer Pakora (8 pcs.)
+   Price: ₹190
+   Type: Veg
+   Suggested Best-Seller: No
+
+3. Chicken Pakora (8 pcs.)
+   Price: ₹200
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+4. Crispy Fried Chicken
+   Price: ₹250
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Chicken Lollipop (5 pcs.)
+   Price: ₹200
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+6. Chicken Dry Fry
+   Price: ₹250
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+7. Chicken Stick (2 pcs.)
+   Price: ₹160
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+8. Chicken Drum Stick (5 pcs.)
+   Price: ₹230
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+9. Chicken 65 (8 pcs.)
+   Price: ₹250
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+10. Chicken Tai Fay
+   Price: ₹280
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+11. Fish Finger (6 pcs.)
+   Price: ₹210
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+12. Paneer Finger (6 pcs.)
+   Price: ₹200
+   Type: Veg
+   Suggested Best-Seller: No
+
+13. Chilli Mushroom Dry
+   Price: ₹260
+   Type: Veg
+   Suggested Best-Seller: No
+
+14. Crispy Chilli Baby Corn
+   Price: ₹220
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+15. Dry Chilli Chicken (8 pcs.)
+   Price: ₹220
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: NON-VEG CHINESE
+Page Section Language: English
+============================================================
+
+1. Chilli Chicken (8 pcs.)
+   Price: ₹200
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+2. Sweet & Sour Chicken (6 pcs.)
+   Price: ₹200
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+3. Hot & Sour Chicken (6 pcs.)
+   Price: ₹210
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+4. Chicken Manchurian (6 pcs.)
+   Price: ₹230
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Garlic Chicken (6 pcs.)
+   Price: ₹190
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+6. Hong Kong Chicken (6 pcs.)
+   Price: ₹220
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+7. Lemon Chicken (6 pcs.)
+   Price: ₹190
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+8. Schezwan Chicken (6 pcs.)
+   Price: ₹210
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: RICE
+Page Section Language: English
+============================================================
+
+1. Veg Fried Rice (Chinese)
+   Price: ₹150
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+2. Veg Fried Rice (Indian)
+   Price: ₹170
+   Type: Veg
+   Suggested Best-Seller: No
+
+3. Egg Fried Rice
+   Price: ₹170
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+4. Chicken Fried Rice
+   Price: ₹190
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Egg Chicken Fried Rice
+   Price: ₹200
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+6. Mixed Fried Rice
+   Price: ₹250
+   Type: Non-Veg / Mixed
+   Suggested Best-Seller: Yes
+
+7. Veg Pulao
+   Price: ₹190
+   Type: Veg
+   Suggested Best-Seller: No
+
+8. Basanti Pulao
+   Price: ₹200
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+9. Basmati Rice
+   Price: ₹100
+   Type: Veg
+   Suggested Best-Seller: No
+
+10. Jeera Rice
+   Price: ₹130
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+11. Lemon Rice
+   Price: ₹130
+   Type: Veg
+   Suggested Best-Seller: No
+
+12. Triple Fried Rice Veg
+   Price: ₹200
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+13. Triple Fried Rice Non-Veg
+   Price: ₹260
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: CHOWMEIN
+Page Section Language: English
+============================================================
+
+1. Veg Chowmein
+   Price: ₹100
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+2. Paneer Chowmein
+   Price: ₹150
+   Type: Veg
+   Suggested Best-Seller: No
+
+3. Egg Chowmein
+   Price: ₹130
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+4. Chicken Chowmein
+   Price: ₹150
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Egg Chicken Chowmein
+   Price: ₹170
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+6. Mixed Chowmein
+   Price: ₹200
+   Type: Non-Veg / Mixed
+   Suggested Best-Seller: Yes
+
+7. Prawn Chowmein
+   Price: ₹210
+   Type: Non-Veg / Seafood
+   Suggested Best-Seller: No
+
+8. Chilli Garlic Chowmein — Veg
+   Price: ₹130
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+9. Chilli Garlic Chowmein — Chicken
+   Price: ₹160
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+10. Chilli Garlic Chowmein — Mixed
+    Price: ₹210
+    Type: Non-Veg / Mixed
+    Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: BIRYANI
+Page Section Language: English
+============================================================
+
+1. Veg Biryani
+   Price: ₹150
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Chicken Biryani
+   Price: ₹170
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+3. Mutton Biryani
+   Price: ₹260
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: FISH
+Page Section Language: English
+============================================================
+
+1. Chilli Fish (Dry / Gravy)
+   Price: Dry ₹250 / Gravy ₹240
+   Type: Non-Veg / Seafood
+   Suggested Best-Seller: Yes
+
+2. Schezwan Fish (Dry / Gravy) (6 pcs.)
+   Price: Dry ₹260 / Gravy ₹250
+   Type: Non-Veg / Seafood
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: CHICKEN
+Page Section Language: English
+============================================================
+
+1. Rimjhim Chicken (4 pcs.)
+   Price: ₹340
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+2. Chicken Curry (4 pcs.)
+   Price: ₹200
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+3. Chicken Kasha (4 pcs.)
+   Price: ₹210
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+4. Chicken Bhuna (4 pcs.)
+   Price: ₹240
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Chicken Jhal Fry (4 pcs.)
+   Price: ₹240
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+6. Chicken Masala (4 pcs.)
+   Price: ₹260
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+7. Chicken Butter Masala (4 pcs.)
+   Price: ₹280
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+8. Chicken Hyderabadi (4 pcs.)
+   Price: ₹240
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+9. Chicken Bharta
+   Price: ₹280
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+10. Chicken Do-Pyaza (4 pcs.)
+    Price: ₹230
+    Type: Non-Veg
+    Suggested Best-Seller: No
+
+11. Chicken Rong Masala
+    Price: ₹270
+    Type: Non-Veg
+    Suggested Best-Seller: No
+
+12. Chicken Chap (4 pcs.)
+    Price: ₹240
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+13. PS Special Chicken (4 pcs.)
+    Price: ₹280
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+14. Banjara Chicken (4 pcs.)
+    Price: ₹290
+    Type: Non-Veg
+    Suggested Best-Seller: No
+
+15. Handi Chicken (4 pcs.)
+    Price: ₹260
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+16. Chicken Tikka Butter Masala (6 pcs.)
+    Price: ₹330
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+17. Chicken Reshmi Butter Masala (6 pcs.)
+    Price: ₹340
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+18. Tandoori Chicken Butter Masala (2 pcs.)
+    Price: ₹290
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+19. Kadai Chicken (4 pcs.)
+    Price: ₹240
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+20. M.M. Malai Chicken (4 pcs.)
+    Price: ₹290
+    Type: Non-Veg
+    Suggested Best-Seller: No
+
+============================================================
+CATEGORY: MUTTON
+Page Section Language: English
+============================================================
+
+1. Mutton Curry (4 pcs.)
+   Price: ₹310
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+2. Mutton Kasha (4 pcs.)
+   Price: ₹320
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+3. Mutton Jhal Fry (4 pcs.)
+   Price: ₹340
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+4. Mutton Masala (4 pcs.)
+   Price: ₹380
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+5. Mutton Butter Masala (4 pcs.)
+   Price: ₹390
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+6. Mutton Hyderabadi (4 pcs.)
+   Price: ₹350
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+7. Mutton Bhuna (4 pcs.)
+   Price: ₹360
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+8. Mutton Do-Pyaza (4 pcs.)
+   Price: ₹350
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+9. Mutton Chap (4 pcs.)
+   Price: ₹370
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+10. PS Special Mutton (4 pcs.)
+    Price: ₹420
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+11. Handi Mutton (4 pcs.)
+    Price: ₹430
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+12. Mutton Rara Ghost (4 pcs.)
+    Price: ₹430
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: VEG
+Page Section Language: English
+============================================================
+
+1. Paneer Butter Masala (8 pcs.) R/W
+   Price: ₹240
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+2. Paneer Masala (8 pcs.)
+   Price: ₹230
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+3. Paneer Hyderabadi (8 pcs.)
+   Price: ₹240
+   Type: Veg
+   Suggested Best-Seller: No
+
+4. Paneer Jhal Fry (8 pcs.)
+   Price: ₹240
+   Type: Veg
+   Suggested Best-Seller: No
+
+5. Paneer Chilli (8 pcs.)
+   Price: ₹230
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+6. Paneer Manchurian (6 pcs.)
+   Price: ₹230
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+7. Paneer Malai Kofta
+   Price: ₹290
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+8. Paneer Bhuna (8 pcs.)
+   Price: ₹240
+   Type: Veg
+   Suggested Best-Seller: No
+
+9. Mix Veg
+   Price: ₹160
+   Type: Veg
+   Suggested Best-Seller: No
+
+10. Alu Paneer Masala
+    Price: ₹150
+    Type: Veg
+    Suggested Best-Seller: No
+
+11. Dal Fry
+    Price: ₹110
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+12. Kashmiri Alu Dam (4 pcs.)
+    Price: ₹140
+    Type: Veg
+    Suggested Best-Seller: No
+
+13. Paneer Do Pyaza (8 pcs.)
+    Price: ₹240
+    Type: Veg
+    Suggested Best-Seller: No
+
+14. Hot Garlic Paneer (6 pcs.)
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+15. Sweet Garlic Paneer (6 pcs.)
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: No
+
+16. Chilli Mushroom Gravy / Dry
+    Price: Gravy ₹240 / Dry ₹260
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+17. Mushroom Manchurian
+    Price: ₹230
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+18. Butter Garlic Paneer (6 pcs.)
+    Price: ₹260
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+19. Mushroom Masala
+    Price: ₹260
+    Type: Veg
+    Suggested Best-Seller: No
+
+20. Mushroom Do-Pyaza
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: No
+
+21. Mushroom Bhuna
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: No
+
+22. Mushroom Jhal Fry
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: No
+
+23. Shower Cut Mushroom
+    Price: ₹260
+    Type: Veg
+    Suggested Best-Seller: No
+
+24. Kadai Paneer (8 pcs.)
+    Price: ₹250
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+25. Kadai Mushroom
+    Price: ₹260
+    Type: Veg
+    Suggested Best-Seller: No
+
+26. Sahi Paneer (8 pcs.)
+    Price: ₹280
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+27. Veg Jhal Fry
+    Price: ₹170
+    Type: Veg
+    Suggested Best-Seller: No
+
+============================================================
+CATEGORY: PAPAD
+Page Section Language: English
+============================================================
+
+1. Papad — Dry
+   Price: ₹20
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Papad — Fry
+   Price: ₹20
+   Type: Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: EGG
+Page Section Language: English
+============================================================
+
+1. Egg Masala (2 pcs.)
+   Price: ₹100
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+2. Egg Do-Pyaza (2 pcs.)
+   Price: ₹90
+   Type: Egg
+   Suggested Best-Seller: No
+
+3. Egg Bhuna (2 pcs.)
+   Price: ₹90
+   Type: Egg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: SALAD
+Page Section Language: English
+============================================================
+
+1. Green Salad
+   Price: ₹50
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Onion Salad
+   Price: ₹40
+   Type: Veg
+   Suggested Best-Seller: No
+
+3. Cucumber Salad
+   Price: ₹60
+   Type: Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: RAITA
+Page Section Language: English
+============================================================
+
+1. Mixed Raita
+   Price: ₹70
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Onion Raita
+   Price: ₹60
+   Type: Veg
+   Suggested Best-Seller: No
+
+3. Cucumber Raita
+   Price: ₹70
+   Type: Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: PARATHA
+Page Section Language: English
+============================================================
+
+1. Plain Paratha
+   Price: ₹35
+   Type: Veg
+   Suggested Best-Seller: No
+
+2. Lachha Paratha (Oil Fry)
+   Price: ₹80
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+3. Alu Paratha
+   Price: ₹70
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+4. Naan Puri
+   Price: ₹35
+   Type: Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: TARKA & ROTI
+Page Section Language: English
+============================================================
+
+1. Veg Tarka
+   Price: ₹100
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+2. Egg Tarka
+   Price: ₹110
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+3. Chicken Tarka
+   Price: ₹150
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+4. Egg Chicken Tarka
+   Price: ₹160
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+5. Chana Masala
+   Price: ₹110
+   Type: Veg
+   Suggested Best-Seller: No
+
+============================================================
+CATEGORY: ROLL
+Page Section Language: English
+============================================================
+
+1. Egg Roll
+   Price: ₹50
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+2. Double Egg Roll
+   Price: ₹60
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+3. Chicken Roll
+   Price: ₹85
+   Type: Non-Veg
+   Suggested Best-Seller: Yes
+
+4. Egg Chicken Roll
+   Price: ₹95
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+5. Paneer Roll
+   Price: ₹100
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: MOGLAI
+Page Section Language: English
+============================================================
+
+1. Moglai
+   Price: ₹110
+   Type: Egg
+   Suggested Best-Seller: Yes
+
+2. Chicken Moglai
+   Price: ₹150
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+3. SPL Moglai
+   Price: ₹180
+   Type: Non-Veg / Egg
+   Suggested Best-Seller: Yes
+
+============================================================
+CATEGORY: TANDOOR
+Page Section Language: English
+============================================================
+
+1. Tandoori Roti
+   Price: ₹35
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+2. Butter Roti
+   Price: ₹45
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+3. Plain Naan
+   Price: ₹65
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+4. Butter Naan
+   Price: ₹75
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+5. Garlic Naan
+   Price: ₹85
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+6. Lachha Paratha
+   Price: ₹80
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+7. Masala Kulcha
+   Price: ₹90
+   Type: Veg
+   Suggested Best-Seller: No
+
+8. Special Kulcha
+   Price: ₹110
+   Type: Veg
+   Suggested Best-Seller: Yes
+
+9. Chicken Kulcha
+   Price: ₹110
+   Type: Non-Veg
+   Suggested Best-Seller: No
+
+10. Tandoori Chicken (Full)
+    Price: ₹460
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+11. Tandoori Chicken (Half)
+    Price: ₹240
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+12. Chicken Tikka (6 pcs.)
+    Price: ₹230
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+13. Chicken Reshmi Kabab (6 pcs.)
+    Price: ₹250
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+14. Chicken Seekh Kabab (6 pcs.)
+    Price: ₹260
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+15. Chicken Malai Kabab (6 pcs.)
+    Price: ₹290
+    Type: Non-Veg
+    Suggested Best-Seller: Yes
+
+16. Paneer Tikka (6 pcs.)
+    Price: ₹240
+    Type: Veg
+    Suggested Best-Seller: Yes
+
+============================================================
+WEBSITE MENU FILTER SUGGESTIONS
+============================================================
+
+Recommended Filters:
+- Veg
+- Egg
+- Non-Veg
+- Seafood
+- Beverage
+- Best-Seller
+- Rice & Biryani
+- Chinese
+- Tandoor
+- Main Course
+- Snacks / Starters
+- Rolls & Moglai
+- Soups
+- Side Items
+
+Suggested Website Highlight / Best-Seller Items:
+- Chicken Biryani
+- Mutton Biryani
+- Chicken Fried Rice
+- Mixed Fried Rice
+- Veg Chowmein
+- Chicken Chowmein
+- Chilli Chicken
+- Chicken Manchurian
+- Chicken Butter Masala
+- Chicken Bharta
+- Chicken Tikka Butter Masala
+- Mutton Kasha
+- Mutton Rara Ghost
+- Paneer Butter Masala
+- Kadai Paneer
+- Sahi Paneer
+- Chicken Lollipop
+- Chicken 65
+- Chicken Roll
+- Egg Chicken Roll
+- Garlic Naan
+- Tandoori Chicken
+- Chicken Tikka
+- Paneer Tikka
+
+Developer Note for Website Coding Agent:
+Use the category names as menu tabs/sections. Use the “Type” field for dietary filters and badge labels. Use the “Suggested Best-Seller” field to add highlighted cards, badges, or a “Popular Picks” section. Keep INR pricing exactly as provided. Do not show any item that has no price.

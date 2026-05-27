@@ -1,0 +1,16 @@
+export const config = {
+  restaurantName: "Panthashala Restaurant",
+  foundedYear: 1996,
+  location: "Rampurhat, West Bengal",
+  primaryPhone: "7501481011",
+  whatsappNumber: "8641824175",
+  openingHours: "8:30 AM to 10:30 PM every day",
+  facebookUrl: "https://www.facebook.com/panthashalarestaurant/",
+  instagramUrl: "https://www.instagram.com/",
+  googleBusinessProfileUrl: "https://share.google/m1wkMZOWINwx6WBRq",
+  googleMapsUrl: "https://maps.app.goo.gl/fR8pfokUx6DY2ypm7",
+  tasteOrderUrl: "https://web.tastyfood.buzz/restaurant?id=21",
+  logoPath: "/P_images/logo.webp",
+  heroImagesPath: "/P_images/heroimages/",
+  galleryImagesPath: "/P_images/Gallery Images/",
+};

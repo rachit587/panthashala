@@ -1,0 +1,114 @@
+.menu-gateway {
+  padding: 4rem 1rem;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gateway-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.gateway-subtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-accent);
+  font-size: 1.1rem;
+}
+
+.gateway-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.gateway-card {
+  position: relative;
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  flex: 1;
+}
+
+.gateway-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.card-content {
+  padding: 2.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gateway-card h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  color: var(--color-wood-dark);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.gateway-card p {
+  color: var(--color-text-main);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.veg-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.badge-veg, .badge-no-onion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-family: var(--font-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-veg {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.badge-no-onion {
+  background-color: #fef7e0;
+  color: #b06000;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+/* Background hints for cards */
+.regular-menu {
+  background-image: linear-gradient(to bottom right, #ffffff, #fffdf5);
+}
+
+.veg-menu {
+  background-image: linear-gradient(to bottom right, #ffffff, #f7fcf8);
+}
+
+@media (min-width: 768px) {
+  .gateway-cards {
+    flex-direction: row;
+  }
+}

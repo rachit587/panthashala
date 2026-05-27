@@ -1,0 +1,37 @@
+.trust-bar {
+  padding: 1.5rem 0;
+  border-bottom: 2px solid var(--color-gold);
+  border-top: 2px solid var(--color-gold);
+}
+
+.trust-bar-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  row-gap: 1rem;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-accent);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.trust-icon {
+  display: flex;
+}
+
+.trust-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (min-width: 768px) {
+  .trust-bar-container {
+    justify-content: space-between;
+  }
+}
