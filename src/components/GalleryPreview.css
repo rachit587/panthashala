@@ -161,24 +161,12 @@
   transform: translateY(0);
 }
 
+/* .gallery-view-all wraps a LiquidMetalButton — keep only layout helpers,
+   no border/color overrides that would clash with the button's own chrome ring */
 .gallery-view-all {
   display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-accent);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-wood-dark);
-  border: 2px solid var(--color-wood-dark);
-  padding: 0.75rem 2rem;
-  border-radius: var(--radius-pill);
-  transition: all var(--transition-normal);
+  justify-content: center;
   margin-top: 1rem;
-}
-
-.gallery-view-all:hover {
-  background: var(--color-wood-dark);
-  color: var(--color-gold);
 }
 
 /* Lightbox overlay (GalleryPreview uses ImageLightbox) */

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { config } from '../config/restaurantConfig';
 import { LiquidMetalButton } from './ui/liquid-metal-button';
@@ -27,11 +27,108 @@ const specialItems = [
 export default function MenuCTA() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
+  // ── Drag / swipe (pointer-events, works on touch & mouse) ──────────────────
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({
+    isDragging: false,
+    startX: 0,
+    scrollLeft: 0,
+    lastX: 0,
+    lastTime: 0,
+    velocity: 0,
+  });
+
+  const [offset, setOffset] = useState(0);
+  const autoRef = useRef<number>(0);
+  const pausedRef = useRef(false);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const totalWidthRef = useRef(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    totalWidthRef.current = track.scrollWidth / 2;
+
+    let lastTs = 0;
+    const SPEED = 0.5; // px/ms — slightly slower than testimonials
+
+    const tick = (ts: number) => {
+      if (!pausedRef.current) {
+        const dt = lastTs ? ts - lastTs : 0;
+        setOffset(prev => {
+          const next = prev + SPEED * dt;
+          return next >= totalWidthRef.current ? next - totalWidthRef.current : next;
+        });
+      }
+      lastTs = ts;
+      autoRef.current = requestAnimationFrame(tick);
+    };
+
+    autoRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(autoRef.current);
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.setPointerCapture(e.pointerId);
+    pausedRef.current = true;
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    dragState.current = {
+      isDragging: true,
+      startX: e.clientX,
+      scrollLeft: offset,
+      lastX: e.clientX,
+      lastTime: performance.now(),
+      velocity: 0,
+    };
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragState.current.isDragging) return;
+    const now = performance.now();
+    const dx = e.clientX - dragState.current.lastX;
+    const dt = now - dragState.current.lastTime;
+    dragState.current.velocity = dt > 0 ? dx / dt : 0;
+    dragState.current.lastX = e.clientX;
+    dragState.current.lastTime = now;
+
+    const delta = e.clientX - dragState.current.startX;
+    let next = dragState.current.scrollLeft - delta;
+    const max = totalWidthRef.current;
+    next = ((next % max) + max) % max;
+    setOffset(next);
+  };
+
+  const onPointerUp = () => {
+    if (!dragState.current.isDragging) return;
+    dragState.current.isDragging = false;
+
+    const vel = -dragState.current.velocity;
+    let momentumOffset = offset;
+    let raf = 0;
+    const friction = 0.95;
+    let v = vel * 16;
+
+    const fling = () => {
+      if (Math.abs(v) < 0.5) {
+        resumeTimerRef.current = setTimeout(() => { pausedRef.current = false; }, 800);
+        return;
+      }
+      const max = totalWidthRef.current;
+      momentumOffset = ((momentumOffset + v) % max + max) % max;
+      setOffset(momentumOffset);
+      v *= friction;
+      raf = requestAnimationFrame(fling);
+    };
+    raf = requestAnimationFrame(fling);
+    return () => cancelAnimationFrame(raf);
+  };
+
   const handleItemClick = (id: string) => {
-    if (activeId === id) {
-      setActiveId(null);
-    } else {
-      setActiveId(id);
+    // Only register click if not dragging
+    if (Math.abs(dragState.current.startX - dragState.current.lastX) < 5) {
+      setActiveId(activeId === id ? null : id);
     }
   };
 
@@ -41,8 +138,19 @@ export default function MenuCTA() {
         <h2 className="section-heading text-gold">Explore Our Menu</h2>
         <p className="section-subtitle text-ivory">Discover the rich flavors of Panthashala</p>
         
-        <div className={`menu-scroller-wrapper ${activeId ? 'is-paused' : ''}`}>
-          <div className="menu-scroller">
+        <div className="menu-scroller-wrapper">
+          <div
+            ref={trackRef}
+            className="menu-scroller menu-scroller-draggable"
+            style={{
+              transform: `translateX(-${offset}px)`,
+              cursor: dragState.current.isDragging ? 'grabbing' : 'grab',
+            }}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerLeave={onPointerUp}
+          >
             {[...specialItems, ...specialItems].map((item, idx) => {
               const uniqueId = `${item.id}-${idx}`;
               const isActive = activeId === uniqueId;
@@ -82,3 +190,4 @@ export default function MenuCTA() {
     </section>
   );
 }
+

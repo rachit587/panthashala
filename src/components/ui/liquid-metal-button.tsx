@@ -254,43 +254,60 @@ function useShaderMount(containerRef: React.RefObject<HTMLDivElement | null>) {
       return;
     }
 
-    // Defer to rAF so the host element is guaranteed to be in the DOM
-    // and have non-zero computed dimensions before ShaderMount touches it.
+    // Double-rAF: the first rAF fires at the START of the next frame
+    // (before paint). The nested rAF fires AFTER that frame is committed
+    // so the browser has had a full paint cycle, guaranteeing non-zero
+    // computed dimensions even for buttons inside framer-motion animated
+    // containers (e.g. the Hero section).  This fixes the intermittent
+    // "0-size canvas → shader never initialises" glitch.
     rafRef.current = requestAnimationFrame(() => {
-      const el = containerRef.current;
-      if (!el) {
-        setAvailable(false);
-        return;
-      }
+      rafRef.current = requestAnimationFrame(() => {
+        const el = containerRef.current;
+        if (!el) {
+          setAvailable(false);
+          return;
+        }
 
-      try {
-        mountRef.current = new ShaderMount(
-          el,
-          liquidMetalFragmentShader,
-          {
-            // Tuned for a CLEARLY-VISIBLE chrome ring inside a thin 5-6px
-            // band. Smaller scale + more repetitions + sharper softness
-            // packs more visible bright highlights into the narrow ring
-            // than the default smooth-gradient look.
-            u_repetition: 6,
-            u_softness: 0.2,
-            u_shiftRed: 0.5,
-            u_shiftBlue: 0.5,
-            u_distortion: 0.3,
-            u_contour: 0,
-            u_angle: 45,
-            u_scale: 2,
-            u_shape: 1,
-            u_offsetX: 0.1,
-            u_offsetY: -0.1,
-          },
-          undefined,
-          0.8,
-        );
-        setAvailable(true);
-      } catch {
-        setAvailable(false);
-      }
+        // Extra guard: if the element still has no dimensions after two
+        // frames, retry once more after a short timeout.
+        const tryMount = () => {
+          try {
+            mountRef.current = new ShaderMount(
+              el,
+              liquidMetalFragmentShader,
+              {
+                // Tuned for a CLEARLY-VISIBLE chrome ring inside a thin 5-6px
+                // band. Smaller scale + more repetitions + sharper softness
+                // packs more visible bright highlights into the narrow ring
+                // than the default smooth-gradient look.
+                u_repetition: 6,
+                u_softness: 0.2,
+                u_shiftRed: 0.5,
+                u_shiftBlue: 0.5,
+                u_distortion: 0.3,
+                u_contour: 0,
+                u_angle: 45,
+                u_scale: 2,
+                u_shape: 1,
+                u_offsetX: 0.1,
+                u_offsetY: -0.1,
+              },
+              undefined,
+              0.8,
+            );
+            setAvailable(true);
+          } catch {
+            setAvailable(false);
+          }
+        };
+
+        if (el.offsetWidth > 0) {
+          tryMount();
+        } else {
+          // Element not yet laid out — wait one more tick
+          setTimeout(tryMount, 80);
+        }
+      });
     });
 
     return () => {

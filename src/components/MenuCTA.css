@@ -37,21 +37,25 @@
   display: flex;
   gap: 2rem;
   width: max-content;
-  animation: scrollInfinite 40s linear infinite;
+  /* Scroll is now JS-driven (requestAnimationFrame + inline translateX) */
+  will-change: transform;
 }
 
-.menu-scroller:hover,
-.menu-scroller-wrapper.is-paused .menu-scroller {
-  animation-play-state: paused;
+.menu-scroller-draggable {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
 }
 
-@keyframes scrollInfinite {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-50% - 1rem));
-  }
+.menu-scroller-draggable:active {
+  cursor: grabbing;
+}
+
+/* Prevent native image drag while swiping */
+.menu-scroller-draggable img {
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 .menu-scroll-item {

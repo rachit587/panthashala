@@ -62,23 +62,25 @@
   display: flex;
   gap: 1rem;
   width: max-content;
-  animation: scrollMarquee 50s linear infinite;
-  padding-left: 1rem; /* Gap buffer at start */
+  /* Scroll is now JS-driven (requestAnimationFrame) — no CSS animation */
+  will-change: transform;
 }
 
-/* Pause animation on hover */
-.testimonials-marquee:hover {
-  animation-play-state: paused;
+.testimonials-draggable {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y; /* allow vertical scroll, capture horizontal */
 }
 
-@keyframes scrollMarquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* Since we duplicate the items, we scroll by exactly half the width */
-    transform: translateX(calc(-50% - 0.5rem));
-  }
+.testimonials-draggable:active {
+  cursor: grabbing;
+}
+
+/* Prevent native image drag while swiping */
+.testimonials-draggable img {
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 .testimonial-card {

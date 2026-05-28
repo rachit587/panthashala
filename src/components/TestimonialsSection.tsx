@@ -1,4 +1,5 @@
 import { Quote } from 'lucide-react';
+import { useRef, useEffect, useState } from 'react';
 import './TestimonialsSection.css';
 
 const reviews = [
@@ -110,6 +111,119 @@ const reviews = [
 ];
 
 export default function TestimonialsSection() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // --- Drag / swipe state (pointer-events based, works on touch & mouse) ---
+  const dragState = useRef({
+    isDragging: false,
+    startX: 0,
+    scrollLeft: 0,
+    lastX: 0,
+    lastTime: 0,
+    velocity: 0,
+  });
+
+  // Auto-scroll offset (CSS animation replaced by JS-driven translateX)
+  const [offset, setOffset] = useState(0);
+  const autoRef = useRef<number>(0);
+  const pausedRef = useRef(false);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Track total content width so we can loop seamlessly
+  const totalWidthRef = useRef(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    // Measure total scrollable width (only one set — we duplicate in JSX)
+    totalWidthRef.current = track.scrollWidth / 2;
+
+    let lastTs = 0;
+    const SPEED = 0.6; // px per ms
+
+    const tick = (ts: number) => {
+      if (!pausedRef.current) {
+        const dt = lastTs ? ts - lastTs : 0;
+        setOffset(prev => {
+          const next = prev + SPEED * dt;
+          // Loop: when we've scrolled one full copy, jump back silently
+          return next >= totalWidthRef.current ? next - totalWidthRef.current : next;
+        });
+      }
+      lastTs = ts;
+      autoRef.current = requestAnimationFrame(tick);
+    };
+
+    autoRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(autoRef.current);
+  }, []);
+
+  // --- Pointer handlers ---
+  const onPointerDown = (e: React.PointerEvent) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.setPointerCapture(e.pointerId);
+
+    pausedRef.current = true;
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+
+    dragState.current = {
+      isDragging: true,
+      startX: e.clientX,
+      scrollLeft: offset,
+      lastX: e.clientX,
+      lastTime: performance.now(),
+      velocity: 0,
+    };
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragState.current.isDragging) return;
+    const now = performance.now();
+    const dx = e.clientX - dragState.current.lastX;
+    const dt = now - dragState.current.lastTime;
+    dragState.current.velocity = dt > 0 ? dx / dt : 0;
+    dragState.current.lastX = e.clientX;
+    dragState.current.lastTime = now;
+
+    const delta = e.clientX - dragState.current.startX;
+    let next = dragState.current.scrollLeft - delta;
+    // Wrap within bounds
+    const max = totalWidthRef.current;
+    next = ((next % max) + max) % max;
+    setOffset(next);
+  };
+
+  const onPointerUp = () => {
+    if (!dragState.current.isDragging) return;
+    dragState.current.isDragging = false;
+
+    // Fling momentum
+    const vel = -dragState.current.velocity; // px/ms
+    let momentumOffset = offset;
+    let raf = 0;
+    const friction = 0.96;
+    let v = vel * 16; // convert to px/frame at 60fps
+
+    const fling = () => {
+      if (Math.abs(v) < 0.5) {
+        // Resume auto-scroll after user interaction settles
+        resumeTimerRef.current = setTimeout(() => {
+          pausedRef.current = false;
+        }, 800);
+        return;
+      }
+      const max = totalWidthRef.current;
+      momentumOffset = ((momentumOffset + v) % max + max) % max;
+      setOffset(momentumOffset);
+      v *= friction;
+      raf = requestAnimationFrame(fling);
+    };
+    raf = requestAnimationFrame(fling);
+    return () => cancelAnimationFrame(raf);
+  };
+
   return (
     <section id="testimonials" className="testimonials-section bg-ivory">
       <div className="testimonials-header text-center">
@@ -119,8 +233,16 @@ export default function TestimonialsSection() {
       </div>
 
       <div className="testimonials-carousel-container">
-        <div className="testimonials-marquee">
-          {/* Duplicate the array twice to create a seamless infinite scroll loop */}
+        <div
+          ref={trackRef}
+          className="testimonials-marquee testimonials-draggable"
+          style={{ transform: `translateX(-${offset}px)`, cursor: dragState.current.isDragging ? 'grabbing' : 'grab' }}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerLeave={onPointerUp}
+        >
+          {/* Duplicate the array twice to create a seamless infinite loop */}
           {[...reviews, ...reviews].map((review, index) => (
             <div className="testimonial-card" key={index}>
               <div className="quote-icon-container text-gold">
@@ -153,3 +275,4 @@ export default function TestimonialsSection() {
     </section>
   );
 }
+
