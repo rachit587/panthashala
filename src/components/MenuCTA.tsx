@@ -50,7 +50,7 @@ export default function MenuCTA() {
     totalWidthRef.current = track.scrollWidth / 2;
 
     let lastTs = 0;
-    const SPEED = 0.5; // px/ms — slightly slower than testimonials
+    const SPEED = 0.2; // px/ms — 60% slower than original 0.5
 
     const tick = (ts: number) => {
       if (!pausedRef.current) {

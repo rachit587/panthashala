@@ -276,18 +276,16 @@ function useShaderMount(containerRef: React.RefObject<HTMLDivElement | null>) {
               el,
               liquidMetalFragmentShader,
               {
-                // Tuned for a CLEARLY-VISIBLE chrome ring inside a thin 5-6px
-                // band. Smaller scale + more repetitions + sharper softness
-                // packs more visible bright highlights into the narrow ring
-                // than the default smooth-gradient look.
-                u_repetition: 6,
-                u_softness: 0.2,
-                u_shiftRed: 0.5,
-                u_shiftBlue: 0.5,
-                u_distortion: 0.3,
+                // Reference-spec uniforms: smooth, large-scale liquid metal
+                // with a clean 2px ring and no distortion.
+                u_repetition: 4,
+                u_softness: 0.5,
+                u_shiftRed: 0.3,
+                u_shiftBlue: 0.3,
+                u_distortion: 0,
                 u_contour: 0,
                 u_angle: 45,
-                u_scale: 2,
+                u_scale: 8,
                 u_shape: 1,
                 u_offsetX: 0.1,
                 u_offsetY: -0.1,
@@ -461,7 +459,7 @@ function Layers({ children, variant, isHovered, isPressed, ripples, shaderContai
         >
           <div
             style={{
-              width: `${width - 8}px`, height: `${H - 8}px`, margin: '4px',
+              width: `${width - 4}px`, height: `${H - 4}px`, margin: '2px',
               borderRadius: '100px',
               background: webGl ? tok.innerBg : tok.fallbackBg,
               boxShadow: isPressed
@@ -488,12 +486,9 @@ function Layers({ children, variant, isHovered, isPressed, ripples, shaderContai
               borderRadius: '100px',
               boxShadow: shadow,
               transition: `${SPRING}, width 0.4s ease, box-shadow 0.15s ease`,
-              // CSS chrome-gradient backdrop so the metal ring is ALWAYS
-              // visible — even on mobile devices where the WebGL shader
-              // may be throttled or fail to paint. The shader canvas paints
-              // ON TOP of this, adding the animated swirl when available.
-              background:
-                'conic-gradient(from 0deg, #f8f8f8 0deg, #c5c5c5 60deg, #ffffff 120deg, #9a9a9a 180deg, #ededed 240deg, #b0b0b0 300deg, #f8f8f8 360deg)',
+              // The shader canvas is the sole visual for the ring.
+              // Transparent background — no competing conic-gradient.
+              background: 'transparent',
             }}
           >
             <div

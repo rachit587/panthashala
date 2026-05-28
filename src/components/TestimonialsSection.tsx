@@ -140,7 +140,7 @@ export default function TestimonialsSection() {
     totalWidthRef.current = track.scrollWidth / 2;
 
     let lastTs = 0;
-    const SPEED = 0.6; // px per ms
+    const SPEED = 0.24; // px per ms — 60% slower than original 0.6
 
     const tick = (ts: number) => {
       if (!pausedRef.current) {
