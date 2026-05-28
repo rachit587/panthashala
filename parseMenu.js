@@ -9,6 +9,14 @@ function parseMenu(filePath, outletName) {
   let currentItem = null;
   
   for (const line of lines) {
+    if (
+      line.startsWith('SUGGESTED BEST-SELLING') || 
+      line.startsWith('COPY-PASTE SUMMARY') ||
+      line.startsWith('WEBSITE MENU FILTER SUGGESTIONS')
+    ) {
+      break;
+    }
+
     if (line.startsWith('CATEGORY:')) {
       currentCategory = line.replace('CATEGORY:', '').trim();
       continue;
