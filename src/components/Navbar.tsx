@@ -143,18 +143,19 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="navbar-mobile-footer">
-            <a href={`tel:${config.primaryPhone}`} className="navbar-mobile-tel">
-              <Phone size={16} />
-              {config.primaryPhone}
-            </a>
+            <LiquidMetalButton
+              href={`tel:${config.primaryPhone}`}
+              variant="wood"
+            >
+              <Phone size={16} /> Call Us
+            </LiquidMetalButton>
             <LiquidMetalButton
               href={config.tasteOrderUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="navbar-mobile-order"
               variant="orange"
             >
-              Order Online →
+              Order Online
             </LiquidMetalButton>
           </div>
         </div>

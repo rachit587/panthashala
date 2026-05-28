@@ -240,83 +240,69 @@ function injectStyles() {
 // that caused intermittent failures when buttons were inside lazy-loaded pages.
 
 function useShaderMount(containerRef: React.RefObject<HTMLDivElement | null>) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mountRef = useRef<any>(null);
-  const rafRef = useRef<number>(0);
   const [available, setAvailable] = useState<boolean>(false);
 
   useEffect(() => {
     injectStyles();
 
     if (!isWebGlAvailable()) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAvailable(false);
       return;
     }
 
-    // Double-rAF: the first rAF fires at the START of the next frame
-    // (before paint). The nested rAF fires AFTER that frame is committed
-    // so the browser has had a full paint cycle, guaranteeing non-zero
-    // computed dimensions even for buttons inside framer-motion animated
-    // containers (e.g. the Hero section).  This fixes the intermittent
-    // "0-size canvas → shader never initialises" glitch.
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = requestAnimationFrame(() => {
-        const el = containerRef.current;
-        if (!el) {
-          setAvailable(false);
-          return;
-        }
+    const el = containerRef.current;
+    if (!el) return;
 
-        // Extra guard: if the element still has no dimensions after two
-        // frames, retry once more after a short timeout.
-        const tryMount = () => {
-          try {
-            mountRef.current = new ShaderMount(
-              el,
-              liquidMetalFragmentShader,
-              {
-                // Reference-spec uniforms: smooth, large-scale liquid metal
-                // with a clean 2px ring and no distortion.
-                u_repetition: 4,
-                u_softness: 0.5,
-                u_shiftRed: 0.3,
-                u_shiftBlue: 0.3,
-                u_distortion: 0,
-                u_contour: 0,
-                u_angle: 45,
-                u_scale: 8,
-                u_shape: 1,
-                u_offsetX: 0.1,
-                u_offsetY: -0.1,
-              },
-              undefined,
-              0.8,
-            );
-            setAvailable(true);
-          } catch {
-            setAvailable(false);
-          }
-        };
+    let mounted = false;
 
-        if (el.offsetWidth > 0) {
-          tryMount();
-        } else {
-          // Element not yet laid out — wait one more tick
-          setTimeout(tryMount, 80);
-        }
-      });
+    const tryMount = () => {
+      if (mounted || el.offsetWidth === 0) return;
+      try {
+        mountRef.current = new ShaderMount(
+          el,
+          liquidMetalFragmentShader,
+          {
+            u_repetition: 4,
+            u_softness: 0.5,
+            u_shiftRed: 0.3,
+            u_shiftBlue: 0.3,
+            u_distortion: 0,
+            u_contour: 0,
+            u_angle: 45,
+            u_scale: 8,
+            u_shape: 1,
+            u_offsetX: 0.1,
+            u_offsetY: -0.1,
+          },
+          undefined,
+          0.8,
+        );
+        setAvailable(true);
+        mounted = true;
+      } catch {
+        setAvailable(false);
+        mounted = true; // prevent infinite retries if creation fails
+      }
+    };
+
+    // Try immediately
+    tryMount();
+
+    // If still 0 width (like inside a hidden/animated container), wait for layout
+    const ro = new ResizeObserver(() => {
+      if (!mounted) tryMount();
     });
+    ro.observe(el);
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
       try {
         mountRef.current?.destroy?.();
       } catch { /* ignore */ }
       mountRef.current = null;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  // Run once on mount — containerRef is stable by design
+  }, []);
 
   const setSpeed = useCallback((s: number) => {
     try { mountRef.current?.setSpeed?.(s); } catch { /* ignore */ }
